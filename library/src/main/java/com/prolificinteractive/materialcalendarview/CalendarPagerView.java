@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView.ShowOtherDates;
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 import com.prolificinteractive.materialcalendarview.format.WeekDayFormatter;
@@ -26,7 +25,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
     protected static final int DEFAULT_DAYS_IN_WEEK = 7;
     private static final Calendar tempWorkingCalendar = CalendarUtils.getInstance();
     private final ArrayList<WeekDayView> weekDayViews = new ArrayList<>();
-    private final ArrayList<DecoratorResult> decoratorResults = new ArrayList<>();
+    private final ArrayList<DayViewDecorator> decorators = new ArrayList<>();
     @ShowOtherDates
     protected int showOtherDates = SHOW_DEFAULTS;
     private MaterialCalendarView mcv;
@@ -114,10 +113,10 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
 
     protected abstract boolean isDayEnabled(CalendarDay day);
 
-    void setDayViewDecorators(List<DecoratorResult> results) {
-        this.decoratorResults.clear();
-        if (results != null) {
-            this.decoratorResults.addAll(results);
+    void setDayViewDecorators(List<DayViewDecorator> decorators) {
+        this.decorators.clear();
+        if (decorators != null) {
+            this.decorators.addAll(decorators);
         }
         invalidateDecorators();
     }
@@ -195,10 +194,10 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         final DayViewFacade facadeAccumulator = new DayViewFacade();
         for (DayView dayView : dayViews) {
             facadeAccumulator.reset();
-            for (DecoratorResult result : decoratorResults) {
-                if (result.decorator.shouldDecorate(dayView.getDate())) {
-                    result.result.applyTo(facadeAccumulator);
-                }
+            for (DayViewDecorator decorator : decorators) {
+                DayViewFacade facade = new DayViewFacade();
+                decorator.decorate(dayView.getDate(), facade);
+                facade.applyTo(facadeAccumulator);
             }
             dayView.applyFacade(facadeAccumulator);
         }

@@ -22,12 +22,9 @@ public class EventDecorator implements DayViewDecorator {
     }
 
     @Override
-    public boolean shouldDecorate(CalendarDay day) {
-        return dates.contains(day);
-    }
-
-    @Override
-    public void decorate(DayViewFacade view) {
-        view.addSpan(new DotSpan(5, color));
+    public void decorate(final CalendarDay day, DayViewFacade view) {
+        if (dates.contains(day)) {
+            view.addSpan(new DotSpan(5, color));
+        }
     }
 }

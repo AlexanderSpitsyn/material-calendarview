@@ -2,16 +2,14 @@ package com.prolificinteractive.materialcalendarview.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.util.Calendar;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Show off setting min and max dates and disabling individual days
@@ -46,12 +44,7 @@ public class DisableDaysActivity extends AppCompatActivity {
     private static class PrimeDayDisableDecorator implements DayViewDecorator {
 
         @Override
-        public boolean shouldDecorate(CalendarDay day) {
-            return PRIME_TABLE[day.getDay()];
-        }
-
-        @Override
-        public void decorate(DayViewFacade view) {
+        public void decorate(final CalendarDay day, DayViewFacade view) {
             view.setDaysDisabled(true);
         }
 
@@ -97,12 +90,7 @@ public class DisableDaysActivity extends AppCompatActivity {
     private static class EnableOneToTenDecorator implements DayViewDecorator {
 
         @Override
-        public boolean shouldDecorate(CalendarDay day) {
-            return day.getDay() <= 10;
-        }
-
-        @Override
-        public void decorate(DayViewFacade view) {
+        public void decorate(final CalendarDay day, DayViewFacade view) {
             view.setDaysDisabled(false);
         }
     }

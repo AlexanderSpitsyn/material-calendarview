@@ -1,26 +1,20 @@
 package com.prolificinteractive.materialcalendarview.sample;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
-import com.prolificinteractive.materialcalendarview.sample.decorators.EventDecorator;
-import com.prolificinteractive.materialcalendarview.sample.decorators.HighlightWeekendsDecorator;
-import com.prolificinteractive.materialcalendarview.sample.decorators.MySelectorDecorator;
 import com.prolificinteractive.materialcalendarview.sample.decorators.OneDayDecorator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Shows off the most basic usage
@@ -51,8 +45,8 @@ public class BasicActivityDecorated extends AppCompatActivity implements OnDateS
         widget.setMaximumDate(calendar.getTime());
 
         widget.addDecorators(
-                new MySelectorDecorator(this),
-                new HighlightWeekendsDecorator(),
+                /*new MySelectorDecorator(this),
+                new HighlightWeekendsDecorator(),*/
                 oneDayDecorator
         );
 
@@ -98,7 +92,7 @@ public class BasicActivityDecorated extends AppCompatActivity implements OnDateS
                 return;
             }
 
-            widget.addDecorator(new EventDecorator(Color.RED, calendarDays));
+            //widget.addDecorator(new EventDecorator(Color.RED, calendarDays));
         }
     }
 }

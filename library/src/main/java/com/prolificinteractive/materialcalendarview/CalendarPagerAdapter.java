@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView.ShowOtherDates;
 import com.prolificinteractive.materialcalendarview.format.DayFormatter;
 import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
@@ -39,7 +38,6 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
     private WeekDayFormatter weekDayFormatter = WeekDayFormatter.DEFAULT;
     private DayFormatter dayFormatter = DayFormatter.DEFAULT;
     private List<DayViewDecorator> decorators = new ArrayList<>();
-    private List<DecoratorResult> decoratorResults = null;
     private int firstDayOfTheWeek = Calendar.SUNDAY;
     private boolean selectionEnabled = true;
 
@@ -57,16 +55,8 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
     }
 
     public void invalidateDecorators() {
-        decoratorResults = new ArrayList<>();
-        for (DayViewDecorator decorator : decorators) {
-            DayViewFacade facade = new DayViewFacade();
-            decorator.decorate(facade);
-            if (facade.isDecorated()) {
-                decoratorResults.add(new DecoratorResult(decorator, facade));
-            }
-        }
         for (V pagerView : currentViews) {
-            pagerView.setDayViewDecorators(decoratorResults);
+            pagerView.setDayViewDecorators(decorators);
         }
     }
 
@@ -159,7 +149,7 @@ abstract class CalendarPagerAdapter<V extends CalendarPagerView> extends PagerAd
         container.addView(pagerView);
         currentViews.add(pagerView);
 
-        pagerView.setDayViewDecorators(decoratorResults);
+        pagerView.setDayViewDecorators(decorators);
 
         return pagerView;
     }
